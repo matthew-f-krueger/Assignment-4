@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1 style="color: MidnightBlue; text-decoration: underline dotted purple;">Genre List</h1>
+
+<input type="text" id="searchInput" onkeyup="filterGenres()" placeholder="Search for genres...">
+<br><br>
+
+{% if genre_list %}
+  <ul id="genreList">
+    {% for genre in genre_list %}
+      <li>
+        <a class="btn btn-link" href="{{ genre.get_absolute_url }}">
+          {{ genre }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>There are no genres available.</p>
+{% endif %}
+
+<script>
+function filterGenres() {
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('searchInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("genreList");
+  li = ul.getElementsByTagName('li');
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+{% endblock %}

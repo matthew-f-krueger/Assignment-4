@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1 style="color: MidnightBlue; text-decoration: underline dotted purple;">Language List</h1>
+
+<input type="text" id="searchInput" onkeyup="filterLanguages()" placeholder="Search for languages...">
+<br><br>
+
+<ul id="languageList">
+  {% for language in language_list %}
+  <li>
+    <a class="btn btn-link" href="{{ language.get_absolute_url }}">{{ language }}</a>
+  </li>
+  {% empty %}
+  <li>There are no languages available.</li>
+  {% endfor %}
+</ul>
+
+<script>
+function filterLanguages() {
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('searchInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("languageList");
+  li = ul.getElementsByTagName('li');
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+{% endblock %}

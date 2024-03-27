@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1 style="color: MidnightBlue; text-decoration: underline dotted purple;">Author List</h1>
+
+<input type="text" id="searchInput" onkeyup="filterAuthors()" placeholder="Search for authors...">
+<br><br>
+
+{% if author_list %}
+  <ul id="authorList">
+    {% for author in author_list %}
+      <li>
+        <a class="btn btn-link" href="{{ author.get_absolute_url }}">
+          {{ author }} ({{author.date_of_birth}} - {% if author.date_of_death %}{{author.date_of_death}}{% endif %})
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>There are no authors available.</p>
+{% endif %}
+
+<script>
+function filterAuthors() {
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('searchInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("authorList");
+  li = ul.getElementsByTagName('li');
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+{% endblock %}

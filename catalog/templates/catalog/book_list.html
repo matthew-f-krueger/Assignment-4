@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %} 
+{% block content %}
+<h1 style="color: MidnightBlue; text-decoration: underline dotted purple;">Book List</h1>
+
+<input type="text" id="searchInput" onkeyup="filterBooks()" placeholder="Search for books...">
+<br><br>
+
+<ul id="bookList">
+  {% if book_list %}
+    {% for book in book_list %}
+    <li>
+      <a class="btn btn-link" href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+      ({{book.author}})
+    </li>
+    {% endfor %}
+  {% else %}
+    <p>There are no books in the library.</p>
+  {% endif %}
+</ul>
+
+<script>
+function filterBooks() {
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('searchInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("bookList");
+  li = ul.getElementsByTagName('li');
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+{% endblock %}
