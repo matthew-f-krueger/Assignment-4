@@ -51,14 +51,14 @@ class BookDetailView(generic.DetailView):
 
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 5
+    paginate_by = 10
 
 class AuthorListView(generic.ListView):
     model = Author
 
 class AuthorDetailView(generic.DetailView):
     model = Author
-    paginate_by = 5
+    paginate_by = 10
 
 class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
     """Generic class-based view listing books on loan to current user."""
